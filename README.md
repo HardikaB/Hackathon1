@@ -1,28 +1,31 @@
 # Hackathon1
-Build a model to compute probability of default for Taiwanese Credit Card Clients
+I'm sharing solution to my 1st GreyAtom Hackathon. This is my first end to end problem solution in ML using Python. Solving a problem is all about understanding data and processing it to implement model. We worked in a team size of 5 and were given four problem statements to select one.
 
-Abstract: This research aimed at the case of customersâ€™ default payments in Taiwan and compares the predictive accuracy of probability of default among six data mining methods.
+Problem Statement::Build a model to compute probability of default for Taiwanese Credit Card Clients.
 
-Data Set Characteristics:  Multivariate
-Number of Instances: 30000
-Area: Business
-Attribute Characteristics:Integer, Real
-Number of Attributes:24
-Associated Tasks:Classification
-Missing Values?:N/A
+For any credit card company to run it is very crucial for them to minimize their losses. Default on credit card payment can result in great financial loss. In order to reduce or even prevent loss of this kind, banks need to determine appropriate given credit for each specific client based on their information. This can be acheived by understand there customers behaviour and able to predict probability of Customers default on Payments.
 
-Source:https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients
+This was a clear case of supervised classification problem. As dataset I was given data for 30K Taiwanese customers including AGE,SEX,EDUCATION,MARRIAGE,LIMIT BALANCE and each last six month's bill amount, payment amount and default details. 
 
-Data Set Information:
-This research aimed at the case of customersâ€™ default payments in Taiwan and compares the predictive accuracy of probability of default among six data mining methods. From the perspective of risk management, the result of predictive accuracy of the estimated probability of default will be more valuable than the binary result of classification - credible or not credible clients. Because the real probability of default is unknown, this study presented the novel â€œSorting Smoothing Methodâ€ to estimate the real probability of default. With the real probability of default as the response variable (Y), and the predictive probability of default as the independent variable (X), the simple linear regression result (Y = A + BX) shows that the forecasting model produced by artificial neural network has the highest coefficient of determination; its regression intercept (A) is close to zero, and regression coefficient (B) to one. Therefore, among the six data mining techniques, artificial neural network is the only one that can accurately estimate the real probability of default.
+Source
+The dataset is availble at the Center for Machine Learning and Intelligent Systems, Bren School of Information and Computer Science, University of California, Irvine: https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients
 
-Attribute Information:
-This research employed a binary variable, default payment (Yes = 1, No = 0), as the response variable. This study reviewed the literature and used the following 23 variables as explanatory variables: 
-X1: Amount of the given credit (NT dollar): it includes both the individual consumer credit and his/her family (supplementary) credit. 
-X2: Gender (1 = male; 2 = female). 
-X3: Education (1 = graduate school; 2 = university; 3 = high school; 4 = others). 
-X4: Marital status (1 = married; 2 = single; 3 = others). 
-X5: Age (year). 
-X6 - X11: History of past payment. We tracked the past monthly payment records (from April to September, 2005) as follows: X6 = the repayment status in September, 2005; X7 = the repayment status in August, 2005; . . .;X11 = the repayment status in April, 2005. The measurement scale for the repayment status is: -1 = pay duly; 1 = payment delay for one month; 2 = payment delay for two months; . . .; 8 = payment delay for eight months; 9 = payment delay for nine months and above. 
-X12-X17: Amount of bill statement (NT dollar). X12 = amount of bill statement in September, 2005; X13 = amount of bill statement in August, 2005; . . .; X17 = amount of bill statement in April, 2005. 
-X18-X23: Amount of previous payment (NT dollar). X18 = amount paid in September, 2005; X19 = amount paid in August, 2005; . . .;X23 = amount paid in April, 2005. 
+
+Insights from dataset given
+This Multivariate dataset is made up of 30K transactions with 24 Attributes.
+Overall 22.1% transaction values are default and 77.88% are not default.
+Categoric features: 'SEX', 'EDUCATION', 'MARRIAGE'.
+Numeric features: 'LIMIT_BAL', 'AGE', 'BILL_AMT1', 'BILL_AMT2', 'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1', 'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6’,'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6’.
+Target Variable: 'default payment next month’.
+No Null values in any of 24 attributes provided.
+
+We started with exploring data by making crosstabs for categorical data and did Inputation for unknown categories. Used seaborn displot to check skewness in numeric features. Did sqrt transformation on AGE and LIMIT BALANCE as data was greater than 0 and right skewed to bring data as close to normal distribution. Also applied scaling transformation using StandardScaler on numeric features. Ploted seaborn heat map to see correlation between numeric features. Also used box plot to check outliers.Performed One hot encoding on categorical features ‘SEX’, ‘MARRIAGE’ and ‘EDUCATION’ to bring then to similar scale.
+
+
+Modeling
+We decided to use the predictive power of three bespoken classes of algorithms
+Logistic regression (scikit-learn)
+Random Forests (scikit-learn)
+Boosted Trees (xgboost)
+
+On each model we applied feature selection and parameter tuning to build best predictive model. Also tried Resampling technique to best fit model.
